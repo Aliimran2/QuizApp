@@ -28,6 +28,6 @@ class QuizActivity : AppCompatActivity() {
 
         val quiz = IntentCompat.getParcelableExtra<QuizModel>(intent, QUIZ, QuizModel::class.java)
 
-        binding.textView.text = "${quiz.title}\n${quiz.subTitle}\n${quiz.timer}"
+
     }
 }
