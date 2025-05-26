@@ -3,6 +3,7 @@ package com.miassolutions.quiztime.ui
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.miassolutions.quiztime.R
@@ -67,6 +68,10 @@ class ScoreDialogFragment : DialogFragment() {
 
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
+        //back key press handle
+        dialog.setOnKeyListener { _, keyCode, _ ->
+            keyCode == KeyEvent.KEYCODE_BACK
+        }
 
         return dialog
     }
