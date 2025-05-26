@@ -118,34 +118,98 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun enableAllAnswerButtons(enable: Boolean) {
+        binding.apply {
+            btn0.isEnabled = enable
+            btn1.isEnabled = enable
+            btn2.isEnabled = enable
+            btn3.isEnabled = enable
+        }
+    }
+
+
     override fun onClick(view: View?) {
 
+        if (view !is MaterialButton) return
+
+        val clickedButton = view
+        val correctAnswer = questionList[currentQuestionIndex].correct
+
         binding.apply {
+            // Reset all button colors
             btn0.setBackgroundColor(getColor(R.color.grey))
             btn1.setBackgroundColor(getColor(R.color.grey))
             btn2.setBackgroundColor(getColor(R.color.grey))
             btn3.setBackgroundColor(getColor(R.color.grey))
-        }
 
-        val clickedButton = view as MaterialButton
-
-        if (clickedButton.id == R.id.btn_next) {
-
-            if (selectedAnswer == questionList[currentQuestionIndex].correct) {
-                score++
-
+            // If NEXT is clicked, go to next question
+            if (clickedButton.id == R.id.btn_next) {
+                currentQuestionIndex++
+                loadQuestions()
+                enableAllAnswerButtons(true)
+                return
             }
 
-            currentQuestionIndex++
-            loadQuestions()
-
-        } else {
+            // Save selected answer
             selectedAnswer = clickedButton.text.toString()
-            clickedButton.setBackgroundColor(getColor(R.color.primary))
 
+            // Disable all answer buttons to prevent multiple selection
+            enableAllAnswerButtons(false)
+
+            // Check answer and color accordingly
+            if (selectedAnswer == correctAnswer) {
+                clickedButton.setBackgroundColor(getColor(R.color.green)) // correct
+                score++
+            } else {
+                clickedButton.setBackgroundColor(getColor(R.color.red))   // wrong
+                // Highlight correct button
+                val correctButton = listOf(btn0, btn1, btn2, btn3)
+                    .firstOrNull { it.text == correctAnswer }
+                correctButton?.setBackgroundColor(getColor(R.color.green))
+            }
         }
-
     }
+
+
+//    override fun onClick(view: View?) {
+//
+//        binding.apply {
+//            btn0.setBackgroundColor(getColor(R.color.grey))
+//            btn1.setBackgroundColor(getColor(R.color.grey))
+//            btn2.setBackgroundColor(getColor(R.color.grey))
+//            btn3.setBackgroundColor(getColor(R.color.grey))
+//        }
+//
+//        val clickedButton = view as MaterialButton
+//
+//        if (clickedButton.id == R.id.btn_next) {
+//
+//            if (selectedAnswer == questionList[currentQuestionIndex].correct) {
+//                clickedButton.setBackgroundColor(getColor(R.color.green))
+//                score++
+//
+//            }else {
+//                clickedButton.setBackgroundColor(getColor(R.color.red))
+//                val correctAnswer = questionList[currentQuestionIndex].correct
+//                binding.apply {
+//                val correctBtn = listOf(btn0, btn1, btn2,btn3)
+//                    .firstOrNull {it.text == correctAnswer}
+//                    correctBtn?.setBackgroundColor(getColor(R.color.green))
+//
+//                }
+//
+//            }
+//
+//            currentQuestionIndex++
+//            loadQuestions()
+//
+//        } else {
+//            selectedAnswer = clickedButton.text.toString()
+//            clickedButton.setBackgroundColor(getColor(R.color.primary))
+//
+//        }
+//
+//    }
 
 
 
