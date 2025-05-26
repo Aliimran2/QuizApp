@@ -8,7 +8,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <ImageView
         android:padding="4dp"
@@ -17,7 +17,7 @@
         android:background="@drawable/back_ground"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:background="@drawable/image_bkgrd"
         android:layout_margin="8dp"
-        android:padding="16dp"
+        android:padding="8dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
