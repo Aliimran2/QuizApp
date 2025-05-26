@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.miassolutions.quiztime.R
+import com.miassolutions.quiztime.data.QuestionModel
 import com.miassolutions.quiztime.data.QuizModel
 import com.miassolutions.quiztime.databinding.ActivityMainBinding
 
@@ -30,22 +31,49 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val questionList = mutableListOf<QuestionModel>()
+        questionList.add(QuestionModel(
+            "What is value g?",
+            listOf("10", "9.8", "7.9", "10.8"),
+            "9.8"
+        ))
+        questionList.add(QuestionModel(
+            "What is your father name?",
+            listOf("10", "9.8", "7.9", "10.8"),
+            "9.8"
+        ))
+        questionList.add(QuestionModel(
+            "What is your name?",
+            listOf("10", "9.8", "7.9", "10.8"),
+            "9.8"
+        ))
+        questionList.add(QuestionModel(
+            "What is Physics?",
+            listOf("10", "9.8", "7.9", "10.8"),
+            "9.8"
+        ))
+        questionList.add(QuestionModel(
+            "What is Mathematics?",
+            listOf("10", "9.8", "7.9", "10.8"),
+            "9.8"
+        ))
 
         val quizList = mutableListOf<QuizModel>()
-        quizList.add(QuizModel("Physics", "All about Physics", 10))
-        quizList.add(QuizModel("Computer", "All about Computer", 20))
-        quizList.add(QuizModel("Chemistry", "All about Chemistry", 15))
-        quizList.add(QuizModel("Math", "All about Math", 10))
-        quizList.add(QuizModel("Physics", "All about Physics", 10))
-        quizList.add(QuizModel("Computer", "All about Computer", 20))
-        quizList.add(QuizModel("Chemistry", "All about Chemistry", 50))
-        quizList.add(QuizModel("Math", "All about Math", 10))
+        quizList.add(
+            QuizModel(
+                "Physics", "All about Physics", 1,
+                questionList
+            )
+        )
+        quizList.add(QuizModel("Computer", "All about Computer", 20, questionList))
+        quizList.add(QuizModel("Chemistry", "All about Chemistry", 15, questionList))
 
-        quizListAdapter = QuizListAdapter{quiz ->
+
+        quizListAdapter = QuizListAdapter { quiz ->
             val intent = Intent(this, QuizActivity::class.java).apply {
                 putExtra(QUIZ, quiz)
             }
-                startActivity(intent)
+            startActivity(intent)
 
         }
         quizListAdapter.submit(quizList)
