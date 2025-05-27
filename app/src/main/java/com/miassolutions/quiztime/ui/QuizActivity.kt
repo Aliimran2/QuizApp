@@ -31,6 +31,8 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var questionList: List<QuestionModel>
 
+    private var countDownTimer: CountDownTimer? = null
+
 
     private var score = 0
     private var currentQuestionIndex = 0
@@ -63,7 +65,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun startTimer() {
         val totalTimeInMillis = time.toInt() * 60 * 1000L
-        object : CountDownTimer(totalTimeInMillis, 1000) {
+        countDownTimer = object : CountDownTimer(totalTimeInMillis, 1000) {
             @SuppressLint("DefaultLocale")
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = millisUntilFinished / 1000
@@ -88,14 +90,14 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
             btn2.setOnClickListener(this@QuizActivity)
             btn3.setOnClickListener(this@QuizActivity)
             btnNext.setOnClickListener(this@QuizActivity)
-            tvQuestion.setOnClickListener(this@QuizActivity)
+
 
         }
     }
 
     private fun loadQuestions() {
 
-        selectedAnswer = ""
+        selectedAnswer = "" // reset selected answer for new question
 
         if (currentQuestionIndex == questionList.size) {
             finishQuiz()
@@ -170,53 +172,20 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
-//    override fun onClick(view: View?) {
-//
-//        binding.apply {
-//            btn0.setBackgroundColor(getColor(R.color.grey))
-//            btn1.setBackgroundColor(getColor(R.color.grey))
-//            btn2.setBackgroundColor(getColor(R.color.grey))
-//            btn3.setBackgroundColor(getColor(R.color.grey))
-//        }
-//
-//        val clickedButton = view as MaterialButton
-//
-//        if (clickedButton.id == R.id.btn_next) {
-//
-//            if (selectedAnswer == questionList[currentQuestionIndex].correct) {
-//                clickedButton.setBackgroundColor(getColor(R.color.green))
-//                score++
-//
-//            }else {
-//                clickedButton.setBackgroundColor(getColor(R.color.red))
-//                val correctAnswer = questionList[currentQuestionIndex].correct
-//                binding.apply {
-//                val correctBtn = listOf(btn0, btn1, btn2,btn3)
-//                    .firstOrNull {it.text == correctAnswer}
-//                    correctBtn?.setBackgroundColor(getColor(R.color.green))
-//
-//                }
-//
-//            }
-//
-//            currentQuestionIndex++
-//            loadQuestions()
-//
-//        } else {
-//            selectedAnswer = clickedButton.text.toString()
-//            clickedButton.setBackgroundColor(getColor(R.color.primary))
-//
-//        }
-//
-//    }
-
-
-
     private fun finishQuiz() {
 
-        val dialog = ScoreDialogFragment.newInstance(score, questionList.size)
-        dialog.show(supportFragmentManager, "ScoreDialogFragment")
+        if (!isFinishing && !isDestroyed){
+
+            val dialog = ScoreDialogFragment.newInstance(score, questionList.size)
+            dialog.show(supportFragmentManager, "ScoreDialogFragment")
+        }
+
+
+    }
+
+    override fun onDestroy() {
+        countDownTimer?.cancel()
+        super.onDestroy()
 
     }
 }
