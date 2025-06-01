@@ -13,46 +13,53 @@
     <ImageView
         android:padding="4dp"
         android:elevation="8dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/back_ground"
-        android:id="@+id/imageView"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/app_image" />
+        app:srcCompat="@drawable/app_image_einstien" />
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:background="@drawable/image_bkgrd"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:elevation="4dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:gravity="center"
-
-            android:textStyle="bold"
-            android:textAppearance="@style/QuizTitleStyle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Quiz Time" />
-
-
-        <TextView
-            android:gravity="center"
-            android:textSize="14sp"
+            android:background="@drawable/image_bkgrd"
+            android:layout_margin="8dp"
             android:padding="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_width="match_parent"
-            android:textColor="@color/white"
             android:layout_height="wrap_content"
-            android:text="This is quiz time! Let's play this awsome game to enhance our knowledge" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:gravity="center"
+
+                android:textStyle="bold"
+                android:textAppearance="@style/QuizTitleStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quiz Time" />
+
+
+            <TextView
+                android:gravity="center"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:text="Let's play this awsome game to enhance our knowledge" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
 
     <TextView
         android:layout_margin="8dp"
