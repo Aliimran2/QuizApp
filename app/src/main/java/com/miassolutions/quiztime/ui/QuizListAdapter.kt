@@ -43,7 +43,7 @@ class QuizListAdapter(private val navToQuiz : (QuizModel) -> Unit) : RecyclerVie
         fun bind(item: QuizModel) {
             binding.apply {
                 tvQuizTitle.text = item.title
-                tvQuizSubtitle.text = item.subTitle
+                tvQuizSubtitle.text = item.subtitle
                 tvTime.text = "${item.timer} min"
 
                 root.setOnClickListener { navToQuiz(item) }

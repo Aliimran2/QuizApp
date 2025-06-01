@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     // Submit the list to adapter
                     quizListAdapter.submit(quizList)
+                    Log.d("MY_TAG", "$quizList")
                 }
                 binding.loading.visibility = View.GONE
 
