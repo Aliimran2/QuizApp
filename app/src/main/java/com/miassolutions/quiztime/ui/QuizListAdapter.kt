@@ -13,6 +13,7 @@ class QuizListAdapter(private val navToQuiz : (QuizModel) -> Unit) : RecyclerVie
 
     fun submit(newList: MutableList<QuizModel>) {
         quizList = newList
+        notifyDataSetChanged()
     }
 
 

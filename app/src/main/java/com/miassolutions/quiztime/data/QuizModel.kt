@@ -5,8 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class QuizModel(
-    val title: String,
-    val subTitle: String,
-    val timer: Int,
-    val questionList : List<QuestionModel>
-) : Parcelable
+    var id : String ,
+    var title: String ,
+    var subTitle: String,
+    var timer: Int,
+    var questionList : List<QuestionModel>
+) : Parcelable {
+    constructor() : this("", "", "", 0, emptyList())
+}

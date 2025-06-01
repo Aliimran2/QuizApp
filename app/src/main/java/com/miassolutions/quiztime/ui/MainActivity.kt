@@ -2,10 +2,14 @@ package com.miassolutions.quiztime.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.Firebase
+import com.google.firebase.database.FirebaseDatabase
 import com.miassolutions.quiztime.R
 import com.miassolutions.quiztime.data.QuestionModel
 import com.miassolutions.quiztime.data.QuizModel
@@ -20,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var quizListAdapter: QuizListAdapter
+    private lateinit var quizList: MutableList<QuizModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,42 +36,25 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val questionList = mutableListOf<QuestionModel>()
-        questionList.add(QuestionModel(
-            "What is value g?",
-            listOf("10", "9.8", "7.9", "10.8"),
-            "9.8"
-        ))
-        questionList.add(QuestionModel(
-            "What is your father name?",
-            listOf("10", "9.8", "7.9", "10.8"),
-            "9.8"
-        ))
-        questionList.add(QuestionModel(
-            "What is your name?",
-            listOf("10", "9.8", "7.9", "10.8"),
-            "9.8"
-        ))
-        questionList.add(QuestionModel(
-            "What is Physics?",
-            listOf("10", "9.8", "7.9", "10.8"),
-            "9.8"
-        ))
-        questionList.add(QuestionModel(
-            "What is Mathematics?",
-            listOf("10", "9.8", "7.9", "10.8"),
-            "9.8"
-        ))
+        quizList = mutableListOf()
 
-        val quizList = mutableListOf<QuizModel>()
-        quizList.add(
-            QuizModel(
-                "Physics", "All about Physics", 1,
-                questionList
-            )
-        )
-        quizList.add(QuizModel("Computer", "All about Computer", 20, questionList))
-        quizList.add(QuizModel("Chemistry", "All about Chemistry", 15, questionList))
+        FirebaseDatabase.getInstance().reference
+            .get()
+            .addOnSuccessListener { dataSnapshot ->
+                if (dataSnapshot.exists()) {
+                    for (snapshot in dataSnapshot.children) {
+
+                        val quizModel = snapshot.getValue(QuizModel::class.java)
+                        quizModel?.let { quizList.add(it) }
+
+                    }
+                            Log.d("MY_TAG", "$quizList")
+                    quizListAdapter.submit(quizList)
+                }
+            }
+
+
+
 
 
         quizListAdapter = QuizListAdapter { quiz ->
@@ -76,9 +64,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
-        quizListAdapter.submit(quizList)
+
+        binding.rvQuiz.layoutManager = LinearLayoutManager(this)
         binding.rvQuiz.adapter = quizListAdapter
 
 
     }
+
+
 }

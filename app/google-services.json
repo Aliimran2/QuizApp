@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "256228929055",
+    "firebase_url": "https://quiz-time-app-b0cac-default-rtdb.firebaseio.com",
+    "project_id": "quiz-time-app-b0cac",
+    "storage_bucket": "quiz-time-app-b0cac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256228929055:android:d44028f0a798cca1976f2a",
+        "android_client_info": {
+          "package_name": "com.miassolutions.quiztime"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKBIkl1Q44VmydIUhG3_WgxWrXlMvAEL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

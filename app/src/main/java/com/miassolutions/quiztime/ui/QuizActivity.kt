@@ -49,7 +49,7 @@ class QuizActivity : AppCompatActivity(), View.OnClickListener {
             insets
         }
 
-        val quiz = IntentCompat.getParcelableExtra<QuizModel>(intent, QUIZ, QuizModel::class.java)
+        val quiz = IntentCompat.getParcelableExtra(intent, QUIZ, QuizModel::class.java)
         quiz?.let {
             questionList = it.questionList
             time = it.timer
