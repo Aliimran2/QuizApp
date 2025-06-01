@@ -3,6 +3,7 @@ package com.miassolutions.quiztime.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -38,24 +39,14 @@ class MainActivity : AppCompatActivity() {
 
         quizList = mutableListOf()
 
-        FirebaseDatabase.getInstance().reference
-            .get()
-            .addOnSuccessListener { dataSnapshot ->
-                if (dataSnapshot.exists()) {
-                    for (snapshot in dataSnapshot.children) {
 
-                        val quizModel = snapshot.getValue(QuizModel::class.java)
-                        quizModel?.let { quizList.add(it) }
-
-                    }
-                            Log.d("MY_TAG", "$quizList")
-                    quizListAdapter.submit(quizList)
-                }
-            }
+        setupRecyclerview()
+        getQuizFromFirebase()
 
 
+    }
 
-
+    private fun setupRecyclerview() {
 
         quizListAdapter = QuizListAdapter { quiz ->
             val intent = Intent(this, QuizActivity::class.java).apply {
@@ -67,9 +58,33 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvQuiz.layoutManager = LinearLayoutManager(this)
         binding.rvQuiz.adapter = quizListAdapter
-
-
     }
+
+    private fun getQuizFromFirebase() {
+        binding.loading.visibility = View.VISIBLE
+
+        FirebaseDatabase.getInstance().reference
+            .get()
+            .addOnSuccessListener { dataSnapshot ->
+                if (dataSnapshot.exists()) {
+                    for (snapshot in dataSnapshot.children) {
+                        val quizModel = snapshot.getValue(QuizModel::class.java)
+                        quizModel?.let { quizList.add(it) }
+                    }
+                    // Submit the list to adapter
+                    quizListAdapter.submit(quizList)
+                }
+                binding.loading.visibility = View.GONE
+
+
+            }
+            .addOnFailureListener {
+                Log.e("MainActivity", "Firebase load failed: ${it.message}")
+                // Hide loader even if failed
+                binding.loading.visibility = View.GONE
+            }
+    }
+
 
 
 }
